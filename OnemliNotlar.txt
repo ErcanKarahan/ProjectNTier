@@ -1,0 +1,44 @@
+﻿                --Architectural Patterns(Mimari Paternler)--
+
+                Architectural Patternler, bir projenin sistematik işleyişinden (çalışma mekanizmasından) slrumludur. Projenin tüm çalışma mantığı ve 
+sistemsel işleyişi ile ilgilenen bir şablondur. Bozuldukları zaman proje cöker...
+Design Patternler ise , kesinlikle projenin sistematik işleyişi ile ilgilenmez. Proje içerisinden cıkardıgınız zaman proje çökmez. 
+Ancak performansını ciddi ölçüde kaybedebilir. Projenin kurulumuna bir katkısı yoktur. Sadece mimari patern ile uyum sağladığı sürece ciddi ölçüde performansı arttırır...
+--------------------------------------------
+
+--Yonetilebilirlik, ekip calısması ve performans acısından bütün sorumlulukları tek tek projelere ayırdıgımı mimarilere Layered Architecture Pattern denir. 
+Bunlardan N-Tİer Architecture Pattern bütün katmanların bagımsız olması prensibini uygulayarak ciddi ölcüde esneklik saglar...Tek bir projede hem veritabanı hem tasarım hem de 
+class'ların tutulması bir hata durumunda projenizin esnekligini kısıtlayacaktır. Ancak bütün görevler kendi sorumluluklarını uygulayan ayrı projelere verildigi takdirde daha 
+fazla esneklik kazanıp aynı zamanda hataya daha hızlı ve daha kolay bir şekilde müdahale etmeniz mümkündür....Aynı zamanda ekip üyeleri aynı anda calısabilirler...
+
+Katmanlı Mimari kullanmak icin aklınızdaki projeyi görev yapacak ayrı ayrı parcalara ayırmalısınız... Projenin bütün halini bölerek yönetmeye calıstıgınızda ve her 
+projeye kendi görevlerini yazdıgınızda bir katmanlı mimari uygulamıs olursunuz....
+Katmanlı Mimari geleneksel olarak 3 katmandan olusur(Ancak projemiz komplekslestiginde daha fazla katmana bölmek istedigimiz bu sayının bir limiti yoktur)...
+Basic bir katmanlı mimaride olması gereken katmanlar:
+
+1=> DAL (Data Access Layer) : Veri erişimi katmanı: Projenizin sadece veritabanı erişimi ile ilgilenecek olan kısmıdır. DBFirst'te sadece veritabanı yansıması 
+almayı saglarken CodeFirst'te sorumlulugunun ayrılması gerekir ,  yaratacagınız Context sınıfını ayrı tutması en saglıklı yaklasımdır. DBFirst'te bu karmanın görevi 
+hem veritabanı sınıfını hem Entity'leri hem de enum'ları tutmak oldugu icin N-Tier'in getirdigi esnekligi biraz olsa da azaltır...Context sınıfının icerisinde ayarlamaları 
+DBFirst'te bu katman belirler. CodeFirst durumunda ise size ait olan sınıflar,tasarım patternleri uygulayacak sınıflar, tamamen Mapping (DB ayarlamalarını yapacak) 
+sınıflar ayrı bir katmana cekilir...Eger CodeFirst kullnıyorsanız Mapping, Fluent Api yöntemiyle yazılması en saglıklı olan yaklasımdır
+
+ 2=>BLL(Business Logic Layer) : İş Mantığı Katmanı: Eğer bir Framework'un size sundugu metotları özelleştirmek isterseniz veya ek olarak kendi 
+metotlarınızı acmak isterseniz ve bu metotlar tüm her yerde kullanılacak metotlar olacaksa/ortak bir sınıf yaratmak isterseniz bu katmanda bu yapıları toplarsınız. 
+Aynı zamanda BLL tasarım paternlerinizin(Design Patterns) büyük bir çoğunluğunu barındıracak bir katmandır 
+(Singleton,GenericRepository,Builder,Factory,Abstract Factor,Memento,Facade,Strategy etc...) Onemli Interface'ler de bu katmanda durur...
+
+3=> Presentation (UI-User Interface):  Sunum /Kullanıcı Arayüzü: Tasarım arayüzüdür...Kullanıcı bunu görür...Burası sayesinde programnız calısır ve kullanılabilr...
+ ---------------------------------------------------------------
+Katmanlı Mimaride Önemli Kurallar Vardır:
+1=> Eger bir katman baska bir katmandan referans alıyorsa oraya referans veremez. Ortak yapılar icin kullanılacak bir baska ara katman acılır...
+2=> Eger bir katmandan referans almıssanı bu, o katmanın da referanslarını aldıgınız anlamına gelmez... Sizin referans alacagınız katmanları ayrı ayrı 
+almanız gerekir (BLL icerisinde DAL'ın referansını barındırıyorsa ve DAL'de EntityFramework referansı varsa yaptıgınız işlem sizin BLL katmanınıza otomatik olarak Entity
+ Framework'un gelecegi anlamına gelmez) O yüzden bir referans eklyecekseniz ayrı eklemeniz gerekir.
+
+
+ //Onemli:
+Bir projenin DAL,BLL,Entities(Model) katmanları sadece bir tane olabilir...Ancak UI katmanı birden fazla olabilir....
+
+
+
+

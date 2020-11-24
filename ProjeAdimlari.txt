@@ -1,0 +1,23 @@
+﻿1=> Oncelikle ENTITIES,BLL,DAL,MAP,UI katmanları acılır (UI katmanı haricindekiler Class Librar(.Net Framework) olarak acılır. 
+UI katmanı hangi display'i istiyorsanız o sekilde acılmalıdır. Bu projede Windows Form Application secilmiştir...)
+
+
+!!!!UI katmanı set as start up project olarak ayarlanmalıdır...
+
+-----ENTITIES Katmanı-------
+*Veritabanında tabloya dönüsecek olan sınıflarınızı tutacak , enum'larınızı icerecek gerekirse  sizin sadece Projenizde kullandıgınız ViewModel'ları tutacak katmandır...
+
+--------DAL Katmanı--------
+*Veritabanınız ile haberlesecek ve veritabanınızın olusmasını saglayacak katmandır
+
+
+--------MAP Katmanı-----------
+
+*Veritabanı ayarlamalarınızı yapacak olan katmandır.
+
+
+-------BLL Katmanı---------
+*İş akışınızı belirleyecek olan katmandır
+
+------UI Katmanı----------
+*Kullanıcının etkileşime gireceği projeyi olusturan katmandır
